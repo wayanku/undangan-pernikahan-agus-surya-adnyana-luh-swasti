@@ -7,13 +7,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Metatah - Ni Made Ayu Handayani</title>
+    <title>Undangan Pernikahan - Agus & Swasti</title>
 
     <!-- [KREASI BARU] Favicon dan Meta Tags untuk Social Media (WhatsApp, dll.) -->
     <link rel="icon" href="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressjpeg/DSC01507-min.jpeg" type="image/jpeg">
-    <meta property="og:title" content="Undangan Metatah: Ni Made Ayu Handayani">
-    <meta property="og:description" content="Jumat, 3 Oktober 2025 | 16.00 WITA - Selesai |  jln trengguli no 29, Penatih, Denpasar Timur
-Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
+    <meta property="og:title" content="Undangan Pernikahan: Agus & Swasti">
+    <meta property="og:description" content="Kami mengundang Anda untuk hadir di acara pernikahan kami. Jumat, 3 Oktober 2025.">
     <!-- Ganti URL gambar ini dengan gambar yang ingin Anda tampilkan di WhatsApp -->
     <meta property="og:image" content="" id="meta-og-image">
     <!-- Ganti URL ini dengan URL website Anda setelah di-hosting -->
@@ -44,7 +43,11 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             max-width: 100vw; /* Gunakan vw untuk viewport width */
             /* Kunci utama: Terapkan overflow-x: hidden untuk mencegah scroll horizontal */
             overflow-x: hidden; 
+            overflow-x: hidden;
+            /* [PERBAIKAN] Kunci scroll vertikal secara default */
+            overflow-y: hidden;
         }
+        body.scroll-enabled { overflow-y: auto; } /* [PERBAIKAN] Kelas untuk mengaktifkan scroll */
 
         body {
             margin: 0; padding: 0;
@@ -131,15 +134,24 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             width: 100%; display: flex; flex-direction: column; align-items: center;
         }
         .cover-content > * { opacity: 0; animation: fadeInUp 1s ease-out forwards; }
-        .cover-content h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 10vw, 3.5rem); margin: 0 0 5px 0; color: var(--color-gold); font-weight: 600; animation-delay: 0.5s; }
+        /* [SARAN] Perbaikan Tampilan Judul di Cover */
+        .cover-content .cover-intro-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+            animation-delay: 0.5s;
+        }
+        .cover-content h1 { font-family: var(--font-nama); font-size: clamp(3rem, 12vw, 4.5rem); margin: 0; color: var(--color-gold); font-weight: 400; animation-delay: 0.7s; line-height: 1.2; }
+        .cover-content .ampersand { font-family: var(--font-display); font-size: 2.5rem; margin: 0 1rem; }
         .cover-content .date { margin: 4px 0; font-size: 0.9rem; animation-delay: 0.7s; } /* Teks tanggal di cover */
-        /* [KREASI] Styling untuk "Kepada Yth" */
+        /* [KREASI & PERBAIKAN] Styling untuk "Kepada Yth" dengan margin yang lebih rapat */
         .recipient-box {
-            margin-top: 25px;
+            margin-top: 15px; /* Mengurangi jarak dari tanggal */
             padding: 8px 20px;
             border: 1px solid rgba(74, 74, 74, 0.3);
             border-radius: 8px;
-            animation-delay: 0.9s;
+            animation-delay: 1.1s;
         }
         .recipient-box p { margin: 0; font-size: 0.95rem; line-height: 1.6; }
         #open-invitation {
@@ -147,7 +159,7 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             margin-top: 30px;
             transition: background-color 0.3s, transform 0.2s;
             animation: shine 3s infinite, fadeInUp 1s ease-out 1.1s forwards;
-        }
+        } /* [SARAN] Penyesuaian delay animasi tombol */
         #cover.opened #open-invitation { display: none; }
         #open-invitation:hover { background-color: var(--color-dark-green); transform: scale(1.05); animation-play-state: paused; }
 
@@ -328,37 +340,29 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             grid-column: 1 / -1; font-family: var(--font-display); font-weight: 600; color: var(--color-dark-green);
         }
 
-        /* [PEROMBAKAN] Desain baru untuk Galeri Foto - Film Strip Vertikal */
-        .gallery-film-strip {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
+        /* [PEROMBAKAN] Desain baru untuk Galeri Foto - Grid Simetris */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
             margin-top: 20px;
         }
-        .gallery-film-strip .gallery-item {
-            width: 85%;
+        .gallery-grid .gallery-item {
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
             position: relative;
+            aspect-ratio: 4 / 5; /* Menjaga rasio aspek foto */
         }
-        .gallery-film-strip .gallery-item img {
+        .gallery-grid .gallery-item img {
             width: 100%;
-            height: auto;
+            height: 100%;
             display: block;
+            object-fit: cover; /* Memastikan gambar mengisi area tanpa distorsi */
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .gallery-film-strip .gallery-item:hover img {
+        .gallery-grid .gallery-item:hover img {
             transform: scale(1.05);
-        }
-        .gallery-film-strip .gallery-item:nth-child(even) {
-            margin-left: auto;
-            margin-right: 0;
-        }
-        .gallery-film-strip .gallery-item:nth-child(odd) {
-            margin-right: auto;
-            margin-left: 0;
         }
 
         /* [PEROMBAKAN] Desain baru untuk Slider Momen - Tumpukan Kartu 3D */
@@ -584,6 +588,28 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             margin: 2rem 0;
         }
 
+        /* [KREASI BARU] Desain ulang Detail Acara dengan ikon */
+        .event-details-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+        .event-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background-color: var(--color-off-white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            border: 1px solid #EAE8E1;
+        }
+        .event-detail-item .icon {
+            color: var(--color-green);
+            flex-shrink: 0;
+        }
 
         /* [KREASI] CSS untuk Galeri Ucapan */
         .wishes-gallery {
@@ -688,11 +714,11 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             color: rgba(255,255,255,0.9);
         }
         .bank-logo {
-            max-height: 25px;
-            margin-bottom: 15px;
+            max-height: 30px; /* [PERBAIKAN] Sedikit memperbesar logo */
+            margin-bottom: 10px;
         }
         .account-number {
-            font-family: var(--font-display);
+            font-family: 'Courier New', Courier, monospace; /* [PERBAIKAN] Font yang lebih cocok untuk nomor */
             font-size: 1.8rem;
             font-weight: 600;
             letter-spacing: 2px;
@@ -703,12 +729,15 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             background-color: rgba(255,255,255,0.9);
             color: var(--color-dark-green);
             border: none;
-            padding: 10px 20px; /* Tombol salin rekening */
+            padding: 12px 25px; /* [PERBAIKAN] Tombol salin rekening lebih besar */
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
             margin-top: 20px; 
             transition: background-color 0.3s, transform 0.2s;
+            display: inline-flex; /* [PERBAIKAN] Agar ikon dan teks sejajar */
+            align-items: center;
+            gap: 8px;
         }
         .copy-button:hover { background-color: white; transform: scale(1.05); }
     </style>
@@ -779,8 +808,150 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             transform: translateX(0) scaleX(var(--scale, 1)); 
         }
     </style>
+    <!-- [KREASI BARU] CSS untuk Halaman Amplop -->
+    <style>
+        @keyframes open-flap {
+            from { transform: rotateX(0deg); }
+            to { transform: rotateX(180deg); }
+        }
+        @keyframes fade-out-envelope {
+            /* [PENYEMPURNAAN] Animasi amplop terbang ke atas saat dibuka */
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(-80px) scale(0.95); }
+        }
+        /* [PENYEMPURNAAN] Animasi untuk segel lilin */
+        @keyframes break-seal {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(1.5); opacity: 0; }
+        }
+
+        #envelope-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e9e5e0; /* Warna latar belakang halaman */
+            z-index: 100;
+            transition: opacity 0.8s ease-out 0.5s, transform 0.8s ease-out 0.5s;
+        }
+        /* [PERBAIKAN] Wrapper untuk memastikan amplop dan tombolnya terpusat dengan benar */
+        .envelope-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .envelope {
+            position: relative;
+            width: clamp(300px, 90vw, 500px);
+            height: clamp(200px, 60vw, 300px);
+            background-color: #f7f2ea;
+            border-radius: 10px;
+            /* [PENYEMPURNAAN] Bayangan lebih dalam, inset, dan efek mengambang */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15), inset 0 -2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .envelope-back {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #f7f2ea;
+            border-radius: 10px;
+        }
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 50%;
+            background-color: #f0e9de;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top center;
+            /* [PENYEMPURNAAN] Transisi lebih halus */
+            transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Bayangan tipis pada penutup */
+            z-index: 3; /* Pastikan penutup di atas konten */
+        }
+        .envelope-content {
+            text-align: center;
+            z-index: 2;
+            /* [PERBAIKAN] Pindahkan konten lebih jauh ke bawah agar tidak tertutup segel */
+            transform: translateY(35px);
+        }
+        #open-envelope-button {
+            background-color: var(--color-green); color: white; border: none; padding: 12px 35px; border-radius: 50px; font-family: var(--font-body); font-size: 1rem; cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            /* [PENYESUAIAN] Tambah jarak tombol dari amplop */
+            margin-top: 40px;
+        }
+        #open-envelope-button:hover { background-color: var(--color-dark-green); transform: scale(1.05); }
+
+        /* [KREASI BARU] Segel Lilin */
+        .wax-seal {
+            position: absolute;
+            top: 45%; /* Posisi segel menutupi ujung penutup */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: #c0392b; /* Warna merah lilin */
+            border-radius: 50%;
+            box-shadow: inset 0 -3px 5px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3);
+            z-index: 4; /* Di bawah tombol, di atas penutup */
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        /* [KREASI BARU] Inisial pada segel lilin */
+        .wax-seal::before {
+            content: 'A&S';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: rgba(0,0,0,0.2);
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.1);
+        }
+        /* [KREASI BARU] Styling untuk nama tamu di amplop */
+        .envelope-recipient {
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+        #envelope-guest-name {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            margin-top: 8px;
+        }
+
+        /* Animasi saat dibuka */
+        .envelope-wrapper.opened .envelope-flap { animation: open-flap 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards; }
+        .envelope-wrapper.opened { animation: fade-out-envelope 0.8s ease-out 0.5s forwards; }
+        /* [PENYEMPURNAAN] Animasi segel pecah saat dibuka */
+        .envelope-wrapper.opened .wax-seal { animation: break-seal 0.4s ease-out forwards; }
+    </style>
 </head>
 <body>
+
+    <!-- [KREASI BARU] Halaman Amplop -->
+    <div id="envelope-container">
+        <div class="envelope-wrapper"> <!-- Wrapper untuk amplop dan tombolnya -->
+            <div class="envelope">
+                <div class="envelope-back"></div>
+                <div class="envelope-content">
+                    <!-- [PENYEMPURNAAN] Menampilkan nama tamu di amplop -->
+                    <p class="envelope-recipient">Kepada Yth.<br><strong id="envelope-guest-name">Tamu Undangan</strong></p>
+                </div>
+                <div class="envelope-flap"></div>
+                <!-- [KREASI BARU] Tambahkan elemen segel lilin -->
+                <div class="wax-seal"></div>
+            </div>
+            <button id="open-envelope-button">Buka Amplop</button>
+        </div>
+    </div>
 
     <!-- [OPTIMASI] Preload musik untuk pemutaran yang lebih cepat -->
     <audio id="background-music" loop preload="auto">
@@ -798,8 +969,9 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             <div class="slide"></div> <div class="slide"></div> <div class="slide"></div>
         </div>
         <div class="cover-content">
-            <h1 id="cover-title"></h1>
-            <p class="date" id="cover-date"></p>
+            <!-- [SARAN] Tampilan cover yang lebih personal dengan nama mempelai -->
+            <h1 style="font-size: clamp(2.5rem, 10vw, 3.5rem); animation-delay: 0.5s; margin-bottom: 0.5rem; color: black; text-shadow: 0 1px 3px rgba(255,255,255,0.2);">Undangan Pernikahan</h1>
+            <p class="date" id="cover-date" style="animation-delay: 0.7s; margin-bottom: 0;"></p>
             <div class="recipient-box" id="recipient-box">
                 <p>Kepada Yth.<br>Bapak/Ibu/Saudara/i<br><strong id="guest-name" style="font-size: 1.1rem; color: var(--color-dark-green);"></strong></p>
             </div>
@@ -855,15 +1027,15 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
                     <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01578-min.webp" alt="Mempelai Wanita" id="bride-card-image">
                 </div>
                 <div class="event-content-wrapper">
-                    <div class="event-sidebar">
-                        <span class="vertical-text">MEMPELAI WANITA</span>
-                    </div>
-                    <div class="event-details-main" style="text-align: center;">
+                    <div class="event-details-main" style="text-align: center; order: 2;">
                         <h3 class="name" style="margin-top: 0; margin-bottom: 1rem;" id="bride-name"></h3>
                         <div style="color: var(--color-dark-green);">
                             <p style="font-size: clamp(1.1rem, 4vw, 1.2rem); margin-top: 0; margin-bottom: 0.5rem;" id="bride-family-relation"></p>
                             <h3 class="parents" style="font-weight: 600; margin-top: 0;" id="bride-parents-names"></h3>
                         </div>
+                    </div>
+                    <div class="event-sidebar" style="order: 3;">
+                        <span class="vertical-text">MEMPELAI WANITA</span>
                     </div>
                 </div>
             </div>
@@ -887,22 +1059,28 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
         <!-- [PERUBAHAN BESAR] Desain baru untuk detail acara yang lebih berkelas -->
         <section id="acara" class="section" style="text-align: center;">
             <h2 class="hidden anim-fade-in-up">Detail Acara</h2>
-            <div class="event-details-premium hidden anim-zoom-in" style="--delay: 0.2s;">
-                <h3 id="event-day-text"></h3>
-                <div class="event-date-large" id="event-date-number"></div>
-                <div class="event-month-year" id="event-month-year-text"></div>
-                
-                <hr>
-
-                <h3>Waktu</h3>
-                <p id="event-time-text"></p>
-
-                <hr>
-
-                <h3>Lokasi</h3>
-                <p id="event-location-text"></p>
+            <!-- [DESAIN BARU] Menggunakan grid dengan ikon -->
+            <div class="event-details-grid">
+                <div class="event-detail-item hidden anim-fade-in-up" style="--delay: 0.2s;">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <div>
+                        <h3 style="margin:0 0 0.25rem 0; font-family: var(--font-display); font-weight: 600; color: var(--color-dark-green);">Tanggal & Waktu</h3>
+                        <p style="margin:0; font-size: 1rem;" id="event-date-time-text"></p>
+                    </div>
+                </div>
+                <div class="event-detail-item hidden anim-fade-in-up" style="--delay: 0.3s;">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div>
+                        <h3 style="margin:0 0 0.25rem 0; font-family: var(--font-display); font-weight: 600; color: var(--color-dark-green);">Lokasi Acara</h3>
+                        <p style="margin:0; font-size: 1rem;" id="event-location-text"></p>
+                    </div>
+                </div>
             </div>
-            <a href="" target="_blank" class="map-button-outline hidden anim-fade-in-up" id="event-map-link" style="--delay: 0.4s; margin-top: 2rem; background-color: var(--color-green); color: white; border-color: var(--color-green);">
+            <a href="" target="_blank" class="map-button-outline hidden anim-fade-in-up" id="event-map-link" style="--delay: 0.4s; margin-top: 2rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"></path><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
                 <span>Lihat Peta Lokasi</span>
             </a>
@@ -942,13 +1120,13 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             <!-- ========================================================== -->
             <!-- ================== GALERI FOTO DIMULAI ================== -->
             <!-- ========================================================== -->
-            <!-- [PEROMBAKAN] Galeri foto dengan layout film strip vertikal -->
-            <div class="gallery-film-strip hidden" style="--delay: 0.2s;">
-                <div class="gallery-item hidden anim-slide-from-left"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01473-min.webp" alt="Galeri Foto 1" loading="lazy"> </div>
-                <div class="gallery-item hidden anim-slide-from-right"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01494-min.webp" alt="Galeri Foto 2" loading="lazy"> </div>
-                <div class="gallery-item hidden anim-slide-from-left"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01507-min.webp" alt="Galeri Foto 3" loading="lazy"> </div>
-                <div class="gallery-item hidden anim-slide-from-right"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01515-min.webp" alt="Galeri Foto 4" loading="lazy"> </div>
-                <div class="gallery-item hidden anim-slide-from-left"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01536-min.webp" alt="Galeri Foto 5" loading="lazy"> </div>
+            <!-- [PEROMBAKAN] Galeri foto dengan layout grid yang rapi -->
+            <div class="gallery-grid hidden anim-fade-in-up" style="--delay: 0.2s;">
+                <div class="gallery-item"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01473-min.webp" alt="Galeri Foto 1" loading="lazy"> </div>
+                <div class="gallery-item"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01494-min.webp" alt="Galeri Foto 2" loading="lazy"> </div>
+                <div class="gallery-item"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01507-min.webp" alt="Galeri Foto 3" loading="lazy"> </div>
+                <div class="gallery-item"> <img src="https://raw.githubusercontent.com/wayanku/undangan-metatah/main/compressed/DSC01515-min.webp" alt="Galeri Foto 4" loading="lazy"> </div>
+                <!-- Anda bisa menambahkan lebih banyak .gallery-item di sini -->
             </div>
             <!-- ========================================================== -->
             <!-- =================== GALERI FOTO SELESAI =================== -->
@@ -973,13 +1151,15 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
         <section id="hadiah" class="section">
             <h2 class="hidden anim-fade-in-up">Kirim Hadiah</h2>
             <p class="hidden anim-fade-in-up" style="--delay: 0.1s;">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara online.</p>
-            <div class="gift-card hidden anim-zoom-in" style="--delay: 0.3s;">
-                <p id="bank-name"></p>
+            <!-- [PERBAIKAN] Desain ulang kartu hadiah agar lebih elegan -->
+            <div class="gift-card hidden anim-zoom-in" style="--delay: 0.3s; text-align: center;">
+                <img src="" alt="Logo Bank" class="bank-logo" id="bank-logo-img">
+                <p style="margin-top: 0.5rem; margin-bottom: 0.5rem;" id="account-name"></p>
+                <p style="margin-top: 0; font-size: 0.9rem; color: rgba(255,255,255,0.7);">Nomor Rekening:</p>
                 <h3 class="account-number" id="account-number"></h3>
-                <p id="account-name"></p>
-                <p style="margin-top: 20px;">No. Rekening:</p>
                 <button class="copy-button" id="copy-account-button">
-                    <span>Salin Rekening</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span id="copy-button-text">Salin Rekening</span>
                 </button>
             </div>
         </section>
@@ -987,10 +1167,10 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
         <section id="rsvp" class="section">
 
             <h2 class="hidden anim-fade-in-up" style="font-family: var(--font-nama); font-size: clamp(3.2rem, 13vw, 4.5rem);">Konfirmasi Kehadiran</h2>
-            <!-- [KREASI BARU] Pembungkus untuk form dan galeri ucapan -->
+            <!-- [PERBAIKAN] Kartu khusus untuk Form RSVP -->
             <div class="rsvp-wishes-container hidden anim-zoom-in" style="--delay: 0.2s;">
                 <form id="rsvp-form" class="rsvp-form">
-                <div class="form-group">
+                <div class="form-group" style="border-bottom: none; padding-bottom: 0;">
                     <label for="nama">Nama Anda</label>
                     <input type="text" id="nama" name="nama" placeholder="Tuliskan nama Anda" required>
                 </div>
@@ -1024,13 +1204,12 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
                 </button>
                 <p id="form-status" style="text-align: center; margin-top: 15px;"></p>
                 </form>
-
             </div>
 
-            <!-- [PENYESUAIAN] Galeri Ucapan dipindahkan ke luar kartu -->
-            <div id="wishes-gallery-container" class="hidden anim-fade-in-up" style="margin-top: 40px; display: none; --delay: 0.4s;">
-                <h2 style="font-family: var(--font-nama); font-size: clamp(3.2rem, 13vw, 4.5rem);">Ucapan & Doa</h2>
-                <p id="no-wishes-message">Jadilah yang pertama mengirim ucapan!</p>
+            <!-- [PERBAIKAN] Galeri Ucapan dalam kartu terpisah yang lebih rapi -->
+            <div id="wishes-gallery-container" class="rsvp-wishes-container hidden anim-fade-in-up" style="margin-top: 2rem; display: none; --delay: 0.4s; text-align: left;">
+                <h3 style="font-family: var(--font-display); font-weight: 600; color: var(--color-dark-green); text-align: center; margin-top: 0; font-size: 1.5rem;">Ucapan & Doa</h3>
+                <p id="no-wishes-message" style="margin-top: 0;">Jadilah yang pertama mengirim ucapan!</p>
                 <div id="wishes-gallery" class="wishes-gallery"></div>
             </div>
         </section>
@@ -1100,7 +1279,8 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             },
             // --- DATA PENDUKUNG ---
             gift: {
-                bankName: "Bank BNI", // Nama bank ditambahkan di sini
+                bankName: "BNI", // Nama bank (singkat, misal: BNI, BCA, Mandiri)
+                bankLogoUrl: "https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/2560px-BNI_logo.svg.png", // URL Logo Bank
                 accountNumber: "1920902971",
                 accountName: "a.n. Ni Made Ayu Handayani"
             },
@@ -1159,6 +1339,7 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             const guest = urlParams.get('to');
             if (guest) {
                 document.getElementById('guest-name').textContent = guest.replace(/\+/g, ' ');
+                document.getElementById('envelope-guest-name').textContent = guest.replace(/\+/g, ' ');
             }
         }
 
@@ -1294,7 +1475,7 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             const data = invitationData;
 
             // --- Mengisi Data Teks ---
-            document.getElementById('cover-title').textContent = `Undangan Metatah`;
+            // Nama mempelai tidak lagi ditampilkan di cover
             document.getElementById('cover-date').textContent = `${data.event.day}, ${data.event.date} ${data.event.month} ${data.event.year}`;
             document.getElementById('ceremony-subject').textContent = data.ceremony.subject;
             
@@ -1312,15 +1493,12 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             document.getElementById('quote-source').textContent = data.quote.source;
             document.getElementById('quote-translation').textContent = data.quote.translation;
 
-            // Mengisi data untuk detail acara resepsi (desain premium)
-            document.getElementById('event-day-text').textContent = data.event.day;
-            document.getElementById('event-date-number').textContent = data.event.date;
-            document.getElementById('event-month-year-text').textContent = `${data.event.month} ${data.event.year}`;
-            document.getElementById('event-time-text').textContent = data.event.time;
+            // Mengisi data untuk detail acara (desain baru dengan ikon)
+            document.getElementById('event-date-time-text').innerHTML = `${data.event.day}, ${data.event.date} ${data.event.month} ${data.event.year}<br>${data.event.time}`;
             document.getElementById('event-location-text').textContent = data.event.location;
             document.getElementById('event-map-link').href = data.event.mapUrl;
 
-            document.getElementById('bank-name').textContent = data.gift.bankName;
+            document.getElementById('bank-logo-img').src = data.gift.bankLogoUrl;
             document.getElementById('account-number').textContent = data.gift.accountNumber;
             document.getElementById('account-name').textContent = data.gift.accountName;
 
@@ -1345,6 +1523,23 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             const music = document.getElementById('background-music');
             const musicToggle = document.getElementById('music-toggle');
             const mainContent = document.getElementById('main-content');
+            const envelopeContainer = document.getElementById('envelope-container');
+            const openEnvelopeButton = document.getElementById('open-envelope-button');
+            const envelopeWrapper = document.querySelector('.envelope-wrapper'); // Ambil wrapper baru
+
+            // Logika untuk membuka amplop
+            openEnvelopeButton.addEventListener('click', function() {
+                const openMainInvitationButton = document.getElementById('open-invitation');
+
+                envelopeWrapper.classList.add('opened');
+                // Sembunyikan container utama setelah animasi pada wrapper selesai
+                envelopeWrapper.addEventListener('animationend', function(e) {
+                    if (e.animationName === 'fade-out-envelope' && envelopeContainer) {
+                        envelopeContainer.style.display = 'none'; // Sembunyikan seluruh container amplop.
+                        // Halaman sampul (#cover) akan muncul secara alami karena sudah tidak ada yang menutupinya.
+                    }
+                });
+            });
 
             getGuestName();
 
@@ -1357,6 +1552,8 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
                 cover.classList.add('opened');
                 html.style.overflowY = 'auto';
                 body.style.overflowY = 'auto';
+                // [PERBAIKAN] Ganti manipulasi style langsung dengan menambahkan kelas
+                body.classList.add('scroll-enabled');
                 mainContent.style.display = 'block';
                 mainContent.scrollIntoView({ behavior: 'smooth' });
 
@@ -1378,11 +1575,12 @@ Jam: 16.00 WITA Undangan upacara potong gigi Ni Made Ayu Handayani.">
             const copyButton = document.getElementById('copy-account-button');
             copyButton.addEventListener('click', function() {
                 navigator.clipboard.writeText(data.gift.accountNumber.replace(/\s/g, '')).then(() => {
-                    const originalText = this.innerHTML;
-                    this.innerHTML = '<span>Berhasil Disalin!</span>';
+                    const buttonText = document.getElementById('copy-button-text');
+                    const originalText = buttonText.textContent;
+                    buttonText.textContent = 'Berhasil Disalin!';
                     this.style.backgroundColor = '#c8e6c9';
                     setTimeout(() => {
-                        this.innerHTML = originalText;
+                        buttonText.textContent = originalText;
                         this.style.backgroundColor = '';
                     }, 2000);
                 }).catch(err => console.error('Gagal menyalin: ', err));
