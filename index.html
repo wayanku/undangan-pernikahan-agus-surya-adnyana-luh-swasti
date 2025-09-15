@@ -345,7 +345,7 @@
             bride: { name: "Luh Swasti", familyRelation: "Putri kedua dari pasangan", father: "I Ketut Regug", mother: "Ni Wayan Rasti" },
             ceremony: { subject: "Upacara Pawiwahan (Pernikahan) putra-putri kami." },
             event: { dateTime: "Oct 3, 2025 16:00:00", day: "Jumat", date: "3", month: "Oktober", year: "2025", time: "16.00 WITA - Selesai", location: "jln trengguli no 29, Penatih, Denpasar Timur", mapUrl: "https://maps.app.goo.gl/w3KEm4DuuEKaQvMp8?g_st=ipc" },
-            gift: { bankName: "BNI", bankLogoUrl: "https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/2560px-BNI_logo.svg.png", accountNumber: "1920902971", accountName: "a.n. Ni Made Ayu Handayani" },
+            gift: { bankName: "BNI", bankLogoUrl: "https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/2560px-BNI_logo.svg.png", accountNumber: "12357474747", accountName: "a.n. Ni Made asik asik jos" },
             quote: { text: `"Devan bhavayatanena te deva bhavayantu vah parasparam bhavayantah sreyah param avapsyatha"`, source: "(Bhagavad Gita 3:11)", translation: "Dengan ini (Yadnya), kami berbakti kepada Hyang Widhi dan dengan ini pula Hyang Widhi memelihara dan mengasihi kamu. Dengan saling memelihara satu sama lain, kamu akan mencapai kebaikan yang maha tinggi." },
             images: {
                 favicon: "https://github.com/wayanku/undangan-pernikahan-agus-surya-adnyana-luh-swasti/blob/main/fto1/WhatsApp%20Image%202025-09-11%20at%2018.55.20.webp?raw=true",
@@ -368,6 +368,37 @@
                     const guestName = guest.replace(/\+/g, ' ');
                     document.getElementById('guest-name').textContent = guestName;
                     document.getElementById('envelope-guest-name').textContent = guestName;
+                }
+            }
+
+            async function loadWishes() {
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxGCIeqSw2c1UnybjCnnprHANJCQF4A7eOYbvpqXjoUDuiU1ZMMzWif_iIFdDWre_De/exec';
+                const wishesContainer = document.getElementById('wishes-gallery');
+                const noWishesMessage = document.getElementById('no-wishes-message');
+                const galleryContainer = document.getElementById('wishes-gallery-container');
+                if (!galleryContainer) return;
+                
+                try {
+                    const response = await fetch(scriptURL);
+                    const result = await response.json();
+
+                    galleryContainer.style.display = 'block';
+
+                    if (result.result === 'success' && result.data.length > 0) {
+                        wishesContainer.style.display = 'block';
+                        noWishesMessage.style.display = 'none';
+                        wishesContainer.innerHTML = result.data.map((wish, index) => `
+                            <div class="wish-card" style="animation-delay: ${index * 0.1}s;">
+                                <span class="sender-name">${wish.nama}</span>
+                                <p>"${wish.ucapan}"</p>
+                            </div>`).join('');
+                    } else {
+                        wishesContainer.style.display = 'none';
+                        noWishesMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error fetching wishes!', error.message);
+                    galleryContainer.style.display = 'none';
                 }
             }
 
@@ -464,6 +495,7 @@
                 document.getElementById('bride-family-relation').textContent = data.bride.familyRelation;
                 document.getElementById('bride-parents-names').innerHTML = `Bapak ${data.bride.father}<br>&<br>Ibu ${data.bride.mother}`;
                 document.getElementById('closing-family-name').textContent = `Kel. Bapak ${data.groom.father} & Kel. Bapak ${data.bride.father}`;
+                document.getElementById('quote-text').textContent = data.quote.text;
                 document.getElementById('quote-source').textContent = data.quote.source;
                 document.getElementById('quote-translation').textContent = data.quote.translation;
                 document.getElementById('event-date-time-text').innerHTML = `${data.event.day}, ${data.event.date} ${data.event.month} ${data.event.year}<br>${data.event.time}`;
@@ -523,7 +555,39 @@
                 });
                 
                 const rsvpForm = document.getElementById('rsvp-form');
-                rsvpForm.addEventListener('submit', function(e) { /* Logika form tetap sama */ e.preventDefault(); /* ... */ });
+                rsvpForm.addEventListener('submit', async function(e) { 
+                    e.preventDefault();
+                    const scriptURL = 'https://script.google.com/macros/s/AKfycbxGCIeqSw2c1UnybjCnnprHANJCQF4A7eOYbvpqXjoUDuiU1ZMMzWif_iIFdDWre_De/exec';
+                    const formButton = this.querySelector('.rsvp-button');
+                    const buttonText = formButton.querySelector('span');
+                    const formStatus = document.getElementById('form-status');
+
+                    formButton.disabled = true;
+                    buttonText.textContent = 'Mengirim...';
+                    formStatus.textContent = '';
+
+                    try {
+                        const response = await fetch(scriptURL, { method: 'POST', body: new FormData(this)});
+                        const result = await response.json();
+
+                        if (result.result === 'success') {
+                            formStatus.textContent = 'Terima kasih, konfirmasi Anda telah terkirim!';
+                            formStatus.style.color = 'var(--color-green)';
+                            rsvpForm.reset();
+                            document.getElementById('jumlah-tamu-group').style.display = 'none';
+                            await loadWishes();
+                        } else {
+                            throw new Error(result.message || 'Terjadi kesalahan saat mengirim data.');
+                        }
+                    } catch (error) {
+                        console.error('Error!', error.message);
+                        formStatus.textContent = 'Gagal mengirim konfirmasi. Silakan coba lagi.';
+                        formStatus.style.color = 'red';
+                    } finally {
+                        formButton.disabled = false;
+                        buttonText.textContent = 'Kirim Konfirmasi';
+                    }
+                });
                 document.querySelectorAll('input[name="kehadiran"]').forEach(opt => { opt.addEventListener('change', function() { document.getElementById('jumlah-tamu-group').style.display = this.value === 'Hadir' ? 'block' : 'none'; }); });
             };
 
@@ -536,7 +600,7 @@
             setupEventListeners();
             startCountdown();
             setupCardStackSlider();
-            // Fungsi loadWishes() dan logika form RSVP tidak diubah karena tidak mempengaruhi kinerja awal.
+            loadWishes();
         });
     </script>
 </body>
