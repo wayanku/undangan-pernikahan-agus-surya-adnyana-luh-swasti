@@ -165,10 +165,22 @@
             padding-left: 25px; 
             padding-right: 25px; 
         }
-        #kutipan { background-color: #f0f0f0; }
-        #rsvp { background-color: #FBF9F6; }
-        #galeri { background-color: #f0f0f0; }
-
+        /* [PERUBAHAN] Menambahkan gradasi pada latar belakang section */
+        #kutipan, #galeri, #rsvp {
+            position: relative;
+            background-color: transparent; /* Hapus warna solid */
+        }
+        #kutipan::before, #galeri::before, #rsvp::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, var(--color-green) 25%, var(--color-green) 75%, transparent 100%);
+            z-index: -1;
+        }
+        #rsvp::before {
+             background: linear-gradient(to bottom, transparent 0%, var(--color-green) 25%, var(--color-green) 75%, transparent 100%);
+        }
         .salam { 
             font-family: var(--font-display); 
             font-weight: 400; 
